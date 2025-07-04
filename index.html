@@ -1,0 +1,800 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>MY Store - Online Shopping</title>
+  <style>
+    :root {
+      --primary-color: #dfc845;
+      --secondary-color: #fff3e0;
+      --text-dark: #222;
+      --text-light: #555;
+      --bg-light: #E3E6E6;
+      --bg-accent: #fff3e0;
+      --header-dark: #212121;
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: 'Segoe UI', Arial, sans-serif;
+    }
+
+    body {
+      background: var(--bg-light);
+      color: var(--text-dark);
+    }
+
+    header.header {
+      background: var(--header-dark);
+      color: #fff;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 18px 40px;
+      position: sticky;
+      top: 0;
+      z-index: 1000;
+      flex-wrap: wrap;
+    }
+
+    .logo {
+      font-size: 2.2rem;
+      font-weight: bold;
+      color: var(--primary-color);
+      letter-spacing: 2px;
+      font-family: 'Segoe UI', Arial, sans-serif;
+    }
+
+    .search-bar {
+      flex: 1;
+      margin: 0 24px;
+      max-width: 500px;
+      display: flex;
+    }
+
+    .search-bar input {
+      flex: 1;
+      padding: 12px 16px;
+      border: none;
+      border-radius: 4px 0 0 4px;
+      font-size: 1rem;
+    }
+
+    .search-bar button {
+      background: var(--primary-color);
+      color: white;
+      border: none;
+      padding: 12px 20px;
+      border-radius: 0 4px 4px 0;
+      font-size: 1rem;
+      cursor: pointer;
+      transition: background 0.2s;
+    }
+
+    .search-bar button:hover {
+      background: #c74304;
+    }
+
+    .nav-links {
+      display: flex;
+      gap: 20px;
+    }
+
+    .nav-links a {
+      color: #fff;
+      text-decoration: none;
+      font-weight: 500;
+      transition: color 0.2s;
+    }
+
+    .nav-links a:hover {
+      color: var(--primary-color);
+    }
+
+    .hero {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      background: #fff;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.04);
+      padding: 60px 40px 40px 40px;
+      flex-wrap: wrap;
+      min-height: 340px;
+    }
+
+    .hero-content {
+      max-width: 540px;
+    }
+
+    .hero-content h1 {
+      font-size: 3rem;
+      color: var(--primary-color);
+      margin-bottom: 20px;
+      font-weight: bold;
+    }
+
+    .hero-content p {
+      font-size: 1.25rem;
+      color: var(--text-light);
+      margin-bottom: 30px;
+    }
+
+    .cta-btn {
+      background: var(--primary-color);
+      color: white;
+      padding: 14px 36px;
+      font-size: 1.1rem;
+      border: none;
+      border-radius: 6px;
+      cursor: pointer;
+      font-weight: bold;
+      transition: background 0.2s, transform 0.2s;
+    }
+
+    .cta-btn:hover {
+      background: #c74304;
+      transform: translateY(-2px);
+    }
+
+    .hero img {
+      max-width: 320px;
+      border-radius: 16px;
+      box-shadow: 0 8px 30px rgba(248,86,6,0.08);
+    }
+
+    .flash-sale-section {
+      background: #fff;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.04);
+      padding: 32px 0 24px 0;
+      margin-bottom: 30px;
+    }
+
+    .flash-sale-title {
+      text-align: center;
+      font-size: 1.7rem;
+      color: var(--primary-color);
+      font-weight: bold;
+      margin-bottom: 18px;
+    }
+
+    .flash-sale-products {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+      gap: 24px;
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 0 20px;
+    }
+
+    .flash-sale-card {
+      background: #fff;
+      border-radius: 12px;
+      box-shadow: 0 2px 8px rgba(248,86,6,0.10);
+      padding: 18px 12px 16px 12px;
+      text-align: center;
+      border: 2px solid var(--primary-color);
+      position: relative;
+      transition: transform 0.2s, box-shadow 0.2s;
+    }
+
+    .flash-sale-card::before {
+      content: 'Flash';
+      position: absolute;
+      top: -16px;
+      left: 12px;
+      background: var(--primary-color);
+      color: #fff;
+      font-size: 0.85rem;
+      font-weight: bold;
+      padding: 2px 10px;
+      border-radius: 8px 8px 8px 0;
+      letter-spacing: 1px;
+    }
+
+    .flash-sale-card img {
+      width: 80px;
+      height: 80px;
+      object-fit: contain;
+      margin-bottom: 10px;
+    }
+
+    .flash-sale-name {
+      font-size: 1.1rem;
+      font-weight: 600;
+      color: var(--primary-color);
+      margin-bottom: 4px;
+    }
+
+    .flash-sale-price {
+      color: var(--primary-color);
+      font-size: 1.1rem;
+      font-weight: bold;
+      margin-bottom: 8px;
+    }
+
+    .flash-sale-btn {
+      background: var(--primary-color);
+      color: #fff;
+      border: none;
+      padding: 8px 20px;
+      border-radius: 4px;
+      font-size: 1rem;
+      font-weight: 500;
+      cursor: pointer;
+      transition: background 0.2s;
+    }
+
+    .flash-sale-btn:hover {
+      background: #c74304;
+    }
+
+    .section-title {
+      text-align: center;
+      font-size: 2rem;
+      color: var(--primary-color);
+      margin: 60px 0 30px;
+      font-weight: bold;
+    }
+
+    .featured-products {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+      gap: 32px;
+      max-width: 1000px;
+      margin: 0 auto 50px auto;
+      padding: 0 20px;
+    }
+
+    .featured-product-card {
+      background: #fff;
+      border-radius: 14px;
+      box-shadow: 0 4px 24px rgba(248,86,6,0.08);
+      padding: 28px 20px 24px 20px;
+      text-align: center;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      transition: transform 0.2s, box-shadow 0.2s;
+    }
+
+    .featured-product-card:hover {
+      transform: translateY(-6px) scale(1.03);
+      box-shadow: 0 8px 32px rgba(248,86,6,0.13);
+    }
+
+    .featured-product-card img {
+      width: 100px;
+      height: 100px;
+      object-fit: contain;
+      margin-bottom: 16px;
+      border-radius: 10px;
+      box-shadow: 0 2px 8px rgba(248,86,6,0.07);
+      background: #fff;
+    }
+
+    .fp-name {
+      font-size: 1.2rem;
+      font-weight: 600;
+      color: var(--primary-color);
+      margin-bottom: 6px;
+    }
+
+    .fp-price {
+      color: var(--primary-color);
+      font-size: 1.1rem;
+      font-weight: bold;
+      margin-bottom: 8px;
+    }
+
+    .fp-desc {
+      font-size: 1rem;
+      color: var(--text-light);
+      margin-bottom: 18px;
+    }
+
+    .fp-btn {
+      background: var(--primary-color);
+      color: #fff;
+      border: none;
+      padding: 10px 28px;
+      border-radius: 4px;
+      font-size: 1rem;
+      font-weight: 500;
+      cursor: pointer;
+      transition: background 0.2s, box-shadow 0.2s;
+      box-shadow: 0 2px 8px rgba(248,86,6,0.10);
+    }
+
+    .fp-btn:hover {
+      background: #c74304;
+      box-shadow: 0 4px 16px rgba(248,86,6,0.18);
+    }
+
+    .shop-categories {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 32px;
+      max-width: 1100px;
+      margin: 0 auto 50px auto;
+      padding: 0 20px;
+    }
+
+    .category-card-2 {
+      background: #fff;
+      border-radius: 14px;
+      box-shadow: 0 4px 24px rgba(248,86,6,0.08);
+      padding: 28px 20px 24px 20px;
+      text-align: center;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      transition: transform 0.2s, box-shadow 0.2s;
+    }
+
+    .category-card-2:hover {
+      transform: translateY(-6px) scale(1.03);
+      box-shadow: 0 8px 32px rgba(248,86,6,0.13);
+    }
+
+    .category-card-2 img {
+      width: 64px;
+      height: 64px;
+      margin-bottom: 16px;
+      border-radius: 10px;
+      box-shadow: 0 2px 8px rgba(248,86,6,0.07);
+      background: #fff;
+    }
+
+    .cat-name {
+      font-size: 1.15rem;
+      font-weight: 600;
+      color: var(--primary-color);
+      margin-bottom: 6px;
+    }
+
+    .cat-desc {
+      font-size: 1rem;
+      color: var(--text-light);
+      margin-bottom: 18px;
+    }
+
+    .cat-btn {
+      background: var(--primary-color);
+      color: #fff;
+      border: none;
+      padding: 10px 28px;
+      border-radius: 4px;
+      font-size: 1rem;
+      font-weight: 500;
+      cursor: pointer;
+      transition: background 0.2s, box-shadow 0.2s;
+      box-shadow: 0 2px 8px rgba(248,86,6,0.10);
+    }
+
+    .cat-btn:hover {
+      background: #c74304;
+      box-shadow: 0 4px 16px rgba(248,86,6,0.18);
+    }
+
+    .products {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+      gap: 24px;
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 20px 60px;
+    }
+
+    .product-card {
+      background: #fff;
+      border-radius: 12px;
+      padding: 20px;
+      text-align: center;
+      box-shadow: 0 2px 8px rgba(248,86,6,0.06);
+      transition: transform 0.2s, box-shadow 0.2s;
+    }
+
+    .product-card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 6px 20px rgba(248,86,6,0.12);
+    }
+
+    .product-card img {
+      width: 64px;
+      height: 64px;
+      margin-bottom: 12px;
+    }
+
+    .product-card .name {
+      font-weight: 600;
+      margin: 12px 0 6px;
+      color: var(--primary-color);
+    }
+
+    .product-card .price {
+      color: var(--primary-color);
+      font-weight: bold;
+      margin-bottom: 10px;
+    }
+
+    .buy-btn {
+      background: var(--primary-color);
+      color: white;
+      border: none;
+      padding: 8px 20px;
+      border-radius: 4px;
+      font-weight: 500;
+      cursor: pointer;
+      transition: background 0.2s;
+    }
+
+    .buy-btn:hover {
+      background: #c74304;
+    }
+
+    .footer {
+      background: #212121;
+      color: white;
+      text-align: center;
+      padding: 40px 20px;
+    }
+
+    .footer a {
+      color: var(--primary-color);
+      text-decoration: none;
+      margin: 0 10px;
+    }
+
+    .footer a:hover {
+      text-decoration: underline;
+    }
+
+    @media (max-width: 900px) {
+      .hero {
+        flex-direction: column;
+        text-align: center;
+        gap: 30px;
+        padding: 40px 10px 20px 10px;
+      }
+      .hero img {
+        width: 200px;
+      }
+      header.header {
+        flex-direction: column;
+        gap: 12px;
+        padding: 18px 10px;
+      }
+      .search-bar {
+        margin: 10px 0;
+        width: 100%;
+      }
+      .office-img {
+        width: 36px;
+        height: 36px;
+        margin-right: 8px;
+      }
+    }
+
+    @media (max-width: 600px) {
+      .featured-products, .shop-categories, .products, .flash-sale-products {
+        grid-template-columns: 1fr;
+        gap: 18px;
+      }
+    }
+
+    .whatsapp-float {
+      position: fixed;
+      width: 56px;
+      height: 56px;
+      bottom: 28px;
+      right: 28px;
+      background-color: #25d366;
+      color: #fff;
+      border-radius: 50%;
+      box-shadow: 0 4px 16px rgba(0,0,0,0.18);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      z-index: 2000;
+      transition: box-shadow 0.2s, transform 0.2s;
+      text-decoration: none;
+    }
+    .whatsapp-float:hover {
+      box-shadow: 0 8px 32px rgba(37,211,102,0.25);
+      transform: scale(1.08);
+    }
+    .whatsapp-float img {
+      width: 32px;
+      height: 32px;
+      display: block;
+    }
+
+    .wa-popup {
+      position: fixed;
+      bottom: 100px;
+      right: 32px;
+      width: 320px;
+      background: #fff;
+      border-radius: 12px;
+      box-shadow: 0 8px 32px rgba(37,211,102,0.18);
+      z-index: 3000;
+      font-family: inherit;
+      animation: wa-pop-in 0.2s;
+    }
+    @keyframes wa-pop-in {
+      from { opacity: 0; transform: translateY(40px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    .wa-popup-header {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      background: #25d366;
+      color: #fff;
+      border-radius: 12px 12px 0 0;
+      padding: 10px 16px;
+      font-weight: bold;
+      font-size: 1.1rem;
+      position: relative;
+    }
+    .wa-popup-close {
+      position: absolute;
+      right: 12px;
+      top: 8px;
+      background: none;
+      border: none;
+      color: #fff;
+      font-size: 1.3rem;
+      cursor: pointer;
+    }
+    .wa-popup-body {
+      padding: 18px 16px 16px 16px;
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+    .wa-welcome {
+      color: #222;
+      font-size: 1rem;
+      margin-bottom: 6px;
+    }
+    .wa-input {
+      padding: 10px;
+      border: 1px solid #ddd;
+      border-radius: 6px;
+      font-size: 1rem;
+      outline: none;
+    }
+    .wa-send-btn {
+      background: #25d366;
+      color: #fff;
+      border: none;
+      padding: 10px 0;
+      border-radius: 6px;
+      font-size: 1rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: background 0.2s;
+    }
+    .wa-send-btn:hover {
+      background: #128c7e;
+    }
+    @media (max-width: 600px) {
+      .wa-popup {
+        width: 95vw;
+        right: 2vw;
+        bottom: 80px;
+      }
+    }
+    .office-img {
+      width: 48px;
+      height: 48px;
+      object-fit: cover;
+      border-radius: 8px;
+      margin-left: auto;
+      margin-right: 18px;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.10);
+      display: block;
+    }
+    .hero-office-img {
+      width: 180px;
+      height: 180px;
+      object-fit: cover;
+      border-radius: 16px;
+      box-shadow: 0 4px 16px rgba(0,0,0,0.10);
+      margin-left: 32px;
+      display: block;
+    }
+    @media (max-width: 900px) {
+      .hero-office-img {
+        width: 120px;
+        height: 120px;
+        margin: 24px auto 0 auto;
+      }
+    }
+  </style>
+</head>
+<body>
+  <header class="header">
+    <div class="logo">MY Store</div>
+    <form class="search-bar" action="#">
+      <input type="text" placeholder="Search in MY Store...">
+      <button type="submit">Search</button>
+    </form>
+    <nav class="nav-links">
+      <a href="#">Home</a>
+      <a href="#">Categories</a>
+      <a href="#">Flash Sale</a>
+      <a href="#">Cart</a>
+      <a href="#">Account</a>
+    </nav>
+  </header>
+
+  <section class="hero">
+    <div class="hero-content">
+      <h1>Welcome to MY Store</h1>
+      <p>Discover millions of products, unbeatable deals, and fast delivery. Shop with confidence at MY Store!</p>
+      <button class="cta-btn">Shop Now</button>
+    </div>
+    <img class="hero-office-img" src="https://images.unsplash.com/photo-1506744038136-46273834b3fb?auto=format&fit=crop&w=320&q=80" alt="Office" />
+  </section>
+
+  <section class="flash-sale-section">
+    <div class="flash-sale-title">Flash Sale</div>
+    <div class="flash-sale-products">
+      <div class="flash-sale-card">
+        <img src="https://img.icons8.com/color/96/000000/iphone-x.png" alt="Smartphone X12">
+        <div class="flash-sale-name">Smartphone X12</div>
+        <div class="flash-sale-price">$399 <span style="text-decoration:line-through;color:#888;font-size:0.95em;">$499</span></div>
+        <button class="flash-sale-btn">Buy Now</button>
+      </div>
+      <div class="flash-sale-card">
+        <img src="https://img.icons8.com/color/96/000000/laptop.png" alt="UltraBook Pro">
+        <div class="flash-sale-name">UltraBook Pro</div>
+        <div class="flash-sale-price">$749 <span style="text-decoration:line-through;color:#888;font-size:0.95em;">$899</span></div>
+        <button class="flash-sale-btn">Buy Now</button>
+      </div>
+      <div class="flash-sale-card">
+        <img src="https://img.icons8.com/color/96/000000/t-shirt.png" alt="Trendy T-Shirt">
+        <div class="flash-sale-name">Trendy T-Shirt</div>
+        <div class="flash-sale-price">$12 <span style="text-decoration:line-through;color:#888;font-size:0.95em;">$19</span></div>
+        <button class="flash-sale-btn">Buy Now</button>
+      </div>
+      <div class="flash-sale-card">
+        <img src="https://img.icons8.com/color/96/000000/grocery-bag.png" alt="Grocery Pack">
+        <div class="flash-sale-name">Grocery Pack</div>
+        <div class="flash-sale-price">$19 <span style="text-decoration:line-through;color:#888;font-size:0.95em;">$29</span></div>
+        <button class="flash-sale-btn">Buy Now</button>
+      </div>
+    </div>
+  </section>
+
+  <div class="section-title">Featured Products</div>
+  <div class="featured-products">
+    <div class="featured-product-card">
+      <img src="https://img.icons8.com/color/120/000000/iphone-x.png" alt="Smartphone X12">
+      <div class="fp-name">Smartphone X12</div>
+      <div class="fp-price">$499</div>
+      <div class="fp-desc">Blazing fast, stunning display, all-day battery. Limited time offer!</div>
+      <button class="fp-btn">Buy Now</button>
+    </div>
+    <div class="featured-product-card">
+      <img src="https://img.icons8.com/color/120/000000/laptop.png" alt="UltraBook Pro">
+      <div class="fp-name">UltraBook Pro</div>
+      <div class="fp-price">$899</div>
+      <div class="fp-desc">Lightweight, powerful, and perfect for work or play.</div>
+      <button class="fp-btn">Buy Now</button>
+    </div>
+    <div class="featured-product-card">
+      <img src="https://img.icons8.com/color/120/000000/t-shirt.png" alt="Trendy T-Shirt">
+      <div class="fp-name">Trendy T-Shirt</div>
+      <div class="fp-price">$19</div>
+      <div class="fp-desc">Soft, stylish, and available in all sizes and colors.</div>
+      <button class="fp-btn">Buy Now</button>
+    </div>
+  </div>
+
+  <div class="section-title">Shop by Category</div>
+  <div class="shop-categories">
+    <div class="category-card-2">
+      <img src="https://img.icons8.com/color/96/000000/smartphone-tablet.png" alt="Electronics">
+      <div class="cat-name">Electronics</div>
+      <div class="cat-desc">Latest gadgets, phones, and accessories.</div>
+      <button class="cat-btn">Shop Now</button>
+    </div>
+    <div class="category-card-2">
+      <img src="https://img.icons8.com/color/96/000000/t-shirt.png" alt="Fashion">
+      <div class="cat-name">Fashion</div>
+      <div class="cat-desc">Trendy clothing and stylish accessories.</div>
+      <button class="cat-btn">Shop Now</button>
+    </div>
+    <div class="category-card-2">
+      <img src="https://img.icons8.com/color/96/000000/grocery-bag.png" alt="Groceries">
+      <div class="cat-name">Groceries</div>
+      <div class="cat-desc">Fresh groceries and daily essentials.</div>
+      <button class="cat-btn">Shop Now</button>
+    </div>
+    <div class="category-card-2">
+      <img src="https://img.icons8.com/color/96/000000/home.png" alt="Home & Living">
+      <div class="cat-name">Home & Living</div>
+      <div class="cat-desc">Furniture, decor, and home essentials.</div>
+      <button class="cat-btn">Shop Now</button>
+    </div>
+    <div class="category-card-2">
+      <img src="https://img.icons8.com/color/96/000000/toy-car.png" alt="Toys">
+      <div class="cat-name">Toys</div>
+      <div class="cat-desc">Fun toys and games for all ages.</div>
+      <button class="cat-btn">Shop Now</button>
+    </div>
+  </div>
+
+  <div class="section-title">Trending Products</div>
+  <div class="products">
+    <div class="product-card"><img src="https://img.icons8.com/color/96/000000/iphone-x.png"/><div class="name">Smartphone X12</div><div class="price">$499</div><button class="buy-btn">Buy Now</button></div>
+    <div class="product-card"><img src="https://img.icons8.com/color/96/000000/laptop.png"/><div class="name">UltraBook Pro</div><div class="price">$899</div><button class="buy-btn">Buy Now</button></div>
+    <div class="product-card"><img src="https://img.icons8.com/color/96/000000/t-shirt.png"/><div class="name">Trendy T-Shirt</div><div class="price">$19</div><button class="buy-btn">Buy Now</button></div>
+    <div class="product-card"><img src="https://img.icons8.com/color/96/000000/grocery-bag.png"/><div class="name">Grocery Pack</div><div class="price">$29</div><button class="buy-btn">Buy Now</button></div>
+    <div class="product-card"><img src="https://img.icons8.com/color/96/000000/home.png"/><div class="name">Home Decor Set</div><div class="price">$59</div><button class="buy-btn">Buy Now</button></div>
+    <div class="product-card"><img src="https://img.icons8.com/color/96/000000/toy-car.png"/><div class="name">Kids Toy Car</div><div class="price">$15</div><button class="buy-btn">Buy Now</button></div>
+  </div>
+
+  <footer class="footer">
+    <div>
+      <a href="#">About Us</a> |
+      <a href="#">Contact</a> |
+      <a href="#">Privacy Policy</a> |
+      <a href="#">Terms of Service</a>
+    </div>
+    <div style="margin-top: 12px;">&copy; 2025 MY Store. All rights reserved.</div>
+  </footer>
+
+  <!-- WhatsApp Floating Button and Popup -->
+  <a href="#" class="whatsapp-float" id="wa-float-btn" title="Chat with us on WhatsApp">
+    <img src="https://img.icons8.com/color/48/000000/whatsapp--v1.png" alt="WhatsApp Chat" />
+  </a>
+  <div class="wa-popup" id="wa-popup" style="display:none;">
+    <div class="wa-popup-header">
+      <img src="https://img.icons8.com/color/32/000000/whatsapp--v1.png" alt="WhatsApp" />
+      <span>Chat with us on WhatsApp</span>
+      <button class="wa-popup-close" id="wa-popup-close">&times;</button>
+    </div>
+    <div class="wa-popup-body">
+      <div class="wa-welcome">Hi there! 👋<br>How can we help you today?</div>
+      <input type="text" id="wa-user-msg" class="wa-input" placeholder="Type your message..." />
+      <button class="wa-send-btn" id="wa-send-btn">Start Chat</button>
+    </div>
+  </div>
+  <script>
+    // WhatsApp popup logic
+    const waBtn = document.getElementById('wa-float-btn');
+    const waPopup = document.getElementById('wa-popup');
+    const waClose = document.getElementById('wa-popup-close');
+    const waSend = document.getElementById('wa-send-btn');
+    waBtn.onclick = function(e) {
+      e.preventDefault();
+      waPopup.style.display = 'block';
+    };
+    waClose.onclick = function() {
+      waPopup.style.display = 'none';
+    };
+    waSend.onclick = function() {
+      const msg = document.getElementById('wa-user-msg').value.trim();
+      const phone = '1234567890'; // Replace with your WhatsApp number
+      let url = 'https://wa.me/' + phone;
+      if(msg) url += '?text=' + encodeURIComponent(msg);
+      window.open(url, '_blank');
+      waPopup.style.display = 'none';
+    };
+    // Optional: Close popup when clicking outside
+    window.onclick = function(event) {
+      if (event.target === waPopup) {
+        waPopup.style.display = 'none';
+      }
+    };
+  </script>
+</body>
+</html>
+
