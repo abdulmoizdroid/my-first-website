@@ -615,9 +615,107 @@
         margin: 24px auto 0 auto;
       }
     }
+    .ad-slider-top {
+      width: 100%;
+      background: linear-gradient(90deg, #f85606 60%, #ffb300 100%);
+      color: #fff;
+      font-weight: bold;
+      font-size: 1.1rem;
+      overflow: hidden;
+      position: relative;
+      z-index: 1001;
+      box-shadow: 0 2px 8px rgba(248,86,6,0.08);
+      padding: 0;
+    }
+    .ad-slider-track {
+      display: flex;
+      transition: transform 0.5s cubic-bezier(.77,0,.18,1);
+      will-change: transform;
+      width: 100%;
+    }
+    .ad-slide {
+      min-width: 100vw;
+      width: 100vw;
+      display: flex;
+      align-items: center;
+      height: 48px;
+      overflow: hidden;
+      position: relative;
+    }
+    .ad-marquee-slide {
+      display: inline-block;
+      white-space: nowrap;
+      padding-left: 100%;
+      animation: marquee-slide 14s linear infinite;
+      color: #fff;
+      width: 100%;
+    }
+    .ad-btn {
+      background: #fff;
+      color: #f85606;
+      border-radius: 4px;
+      padding: 4px 16px;
+      margin-left: 16px;
+      text-decoration: none;
+      font-weight: bold;
+      font-size: 1rem;
+      transition: background 0.2s, color 0.2s;
+    }
+    .ad-btn:hover {
+      background: #f85606;
+      color: #fff;
+      border: 1px solid #fff;
+    }
+    @keyframes marquee-slide {
+      0%   { transform: translateX(0); }
+      100% { transform: translateX(-100%); }
+    }
+    .ad-slider-dots {
+      position: absolute;
+      bottom: 6px;
+      left: 50%;
+      transform: translateX(-50%);
+      display: flex;
+      gap: 8px;
+      z-index: 2;
+    }
+    .ad-slider-dot {
+      width: 10px;
+      height: 10px;
+      border-radius: 50%;
+      background: #fff8;
+      border: 1.5px solid #fff;
+      cursor: pointer;
+      transition: background 0.2s, border 0.2s;
+    }
+    .ad-slider-dot.active {
+      background: #fff;
+      border: 2px solid #f85606;
+    }
+    @media (max-width: 600px) {
+      .ad-slider-top {
+        font-size: 0.95rem;
+      }
+      .ad-btn {
+        font-size: 0.95rem;
+        padding: 4px 10px;
+        margin-left: 8px;
+      }
+      .ad-slide {
+        height: 38px;
+      }
+    }
   </style>
 </head>
 <body>
+  <div class="ad-slider-top">
+    <div class="ad-slider-track" id="ad-slider-track">
+      <div class="ad-slide"><span class="ad-marquee-slide">🎉 Limited Time Offer: Get up to <strong>50% OFF</strong> on Electronics! | Free Shipping on Orders Over $50 | <a href="#" class="ad-btn">Shop Now</a></span></div>
+      <div class="ad-slide"><span class="ad-marquee-slide">🚚 Fast Delivery: All orders shipped within 24 hours! | <a href="#" class="ad-btn">See Details</a></span></div>
+      <div class="ad-slide"><span class="ad-marquee-slide">👗 New Arrivals: Check out the latest in Fashion! | <a href="#" class="ad-btn">Browse Fashion</a></span></div>
+    </div>
+    <div class="ad-slider-dots" id="ad-slider-dots"></div>
+  </div>
   <header class="header">
     <div class="logo">MY Store</div>
     <form class="search-bar" action="#">
@@ -795,6 +893,41 @@
       }
     };
   </script>
+  <script>
+    // Advertisement slider logic
+    const adSlides = document.querySelectorAll('.ad-slide');
+    const adTrack = document.getElementById('ad-slider-track');
+    const adDotsContainer = document.getElementById('ad-slider-dots');
+    let adCurrent = 0;
+    let adTimer;
+    function showAdSlide(idx) {
+      adTrack.style.transform = `translateX(-${idx * 100}vw)`;
+      document.querySelectorAll('.ad-slider-dot').forEach((dot, i) => {
+        dot.classList.toggle('active', i === idx);
+      });
+      adCurrent = idx;
+    }
+    function nextAdSlide() {
+      let next = (adCurrent + 1) % adSlides.length;
+      showAdSlide(next);
+    }
+    // Create dots
+    adSlides.forEach((_, i) => {
+      const dot = document.createElement('div');
+      dot.className = 'ad-slider-dot' + (i === 0 ? ' active' : '');
+      dot.onclick = () => {
+        showAdSlide(i);
+        resetAdTimer();
+      };
+      adDotsContainer.appendChild(dot);
+    });
+    function resetAdTimer() {
+      clearInterval(adTimer);
+      adTimer = setInterval(nextAdSlide, 6000);
+    }
+    resetAdTimer();
+    // Auto slide
+    adTimer = setInterval(nextAdSlide, 6000);
+  </script>
 </body>
 </html>
-
